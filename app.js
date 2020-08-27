@@ -56,7 +56,7 @@ function Graphs(sampleId) {
 // BONUS //
 function Gauge(sampleId) {
     d3.json("data/samples.json").then((otuData) => {
-        var wash = otuData.metadata.filter(data => data.id == sampleId);
+        var wash = otuData.metadata.filter(w => w.id == sampleId);
         var washArray = wash[0];
         var wfreq = washArray.wfreq;
 
@@ -96,7 +96,7 @@ function Gauge(sampleId) {
         var layout3 = {
             width: 550,
             height: 350,
-            margin: {t: 25, b: 25},
+            margin: {t: 25, b:25},
             paper_bgcolor: "white",
             font: {color: "auto", family: "Arial"}
         };
