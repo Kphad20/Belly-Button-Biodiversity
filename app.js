@@ -1,7 +1,7 @@
-function Graphs(sampleID) {
+function Graphs(sampleId) {
     d3.json("data/samples.json").then((otuData) => {
         console.log(otuData);
-        var array = otuData.samples.filter(s => s.id == sampleID);
+        var array = otuData.samples.filter(s => s.id == sampleId);
         var sample = array[0];
         var otu_ids = sample.otu_ids;
         var otu_labels = sample.otu_labels;
@@ -54,10 +54,14 @@ function Graphs(sampleID) {
 };
 
 // BONUS //
-function Gauge(sampleID) {
+function Gauge(sampleId) {
     d3.json("data/samples.json").then((otuData) => {
-        var wfreq = otuData.metadata.find(data => data.id.toString() === sampleID).wfreq
-        
+        var wash = otuData.metadata.filter(data => data.id == sampleId);
+        // var wfreqA = otuData.metadata.find(data => data.id.toString() === sampleID).wfreq;
+        var washArray = wash[0];
+        var wfreq = washArray.wfreq;
+        d3.select("#gauge").html("");
+
         //Trace for gauge
         var trace3 = {
             type: "indicator",
@@ -119,10 +123,10 @@ function demographData(sampleId) {
 };
 
 //Function to filter data on dashboard when Test Subject ID dropdown is selected
-function optionChanged(sampleID) {
-    Graphs(sampleID);
-    demographData(sampleID);
-    Gauge(sampleID)
+function optionChanged(sampleId) {
+    Graphs(sampleId);
+    demographData(sampleId);
+    Gauge(sampleId)
 };
 
 // Initialize the page with default graphs and demographics info
@@ -138,7 +142,7 @@ function init() {
         var sampleId = names[0];
         Graphs(sampleId);
         demographData(sampleId);
-        Gauge(sampleID)
+        Gauge(sampleId)
     });
 };
 
