@@ -1,12 +1,12 @@
 function Graphs(sampleID) {
     d3.json("data/samples.json").then((otuData) => {
         console.log(otuData);
-        // var data = otuData.samples;
         var array = otuData.samples.filter(s => s.id == sampleID);
         var sample = array[0];
         var otu_ids = sample.otu_ids;
         var otu_labels = sample.otu_labels;
         var sample_values = sample.sample_values;
+        // var wash = metadata.find(data ==> data.id.toString() === id).wfreq;
         
         // Trace for horizontal bar graph. Slice the top 10 OTUs and use reverse method to accommodate Plotly's ascending default
         var trace1 = {
@@ -55,101 +55,54 @@ function Graphs(sampleID) {
         // BONUS //
         //Trace for gauge
         var trace3 = {
-            type: "gauge",
-            'scale-r': {
-            aperture:200,
-            values: "0:100:20",
-            center: {
-                size:5,
-                'background-color': "#66CCFF #FFCCFF",
-                'border-color': "none"
-            },
-            ring: {
-                size:5,
-                rules: [{
-                    rule: "%v >= 0 && %v <= 20",
-                    'background-color': "red"
-                    },
-                    {rule: "%v >= 20 && %v <= 40",
-                    'background-color': "orange"
-                    },
-                    {rule: "%v >= 40 && %v <= 60",
-                    'background-color': "yellow"
-                    },
-                    {rule: "%v >= 60 && %v <= 80",
-                    'background-color': "green"
-                    },
-                    {rule: "%v >= 80 && %v <=100",
-                    'background-color': "blue"
-                    }],
-                labels: [ "Very Poor", "Poor", "Fair", "Good", "Great", "Very Great" ]
+            type: "indicator",
+            mode: "gauge+number",
+            value: otuData.metadata.wfreq,
+            title: { text: "Belly Button Washing Frequency", font: { size: 20 } },
+            gauge: {
+                axis: { range: [0, 9], tickwidth: 1, tickcolor: "black" },
+                bar: { color: "darkblue" },
+                bgcolor: "white",
+                borderwidth: 2,
+                bordercolor: "black",
+                steps: [
+                  { range: [0, 1], color: "#33BEFF" },
+                  { range: [1, 2], color: "#33ACFF" },
+                  { range: [2, 3], color: "#339FFF" },
+                  { range: [3, 4], color: "#3390FF" },
+                  { range: [4, 5], color: "#337AFF" },
+                  { range: [5, 6], color: "#3364FF " },
+                  { range: [6, 7], color: "#334CFF" },
+                  { range: [7, 8], color: "#3633FF" },
+                  { range: [8, 9], color: "#4C33FF" }
+                ],
+                threshold: {
+                  line: { color: "red", width: 4 },
+                  thickness: 0.75,
+                  value: otuData.metadata.wfreq
                 }
-            },
-        plot: {
-            csize: "5%",
-            size: "100%",
-            'background-color': "#000000"
-        },
-        series: [
-            { values: [otuData.metadata.wfreq],
-            indicator: [-10,0,0,0,0.3],
-            text: "R-Base (neg value --> flat base)"}
-        ]
+            }
         };
-        // var trace3 = {
-        //     type: 'pie',
-        //     showlegend: false,
-        //     hole: 0.3,
-        //     rotation: 90,
-        //     values: [81/5, 81/5, 81/5, 81/5, 81/5, 81],
-        //     text: ['0-1','2-3','4-5','6-7','8-9'],
-        //     direction: 'clockwise',
-        //     textinfo: 'text',
-        //     textposition: 'inside',
-        //     marker: {
-        //         colors: ['','','','','','white'],
-        //         labels: ['0-1','2-3','4-5','6-7','8-9'],
-        //         hoverinfo: 'label'
-        //     }
-        // };
-  
-        // //  Dial
-        // var wfreq = otuData.metadata.wfreq
-        // var degrees = 50, radius = .9
-        // var radians = degrees * Math.PI / 180
-        // var x = -1 * radius * Math.cos(radians) * wfreq
-        // var y = radius * Math.sin(radians)
-  
-        var layout3 = {
-        //     shapes: [{
-        //     type: 'line',
-        //     x0: 0.5,
-        //     y0: 0.5,
-        //     x1: 0.6,
-        //     y1: 0.6,
-        //     line: {
-        //         color: 'black',
-        //         width: 3
-        //     }
-        //     }],
-            title: 'Belly Button Washing Frequency'};
-            // xaxis: {visible: false, range: [-1, 1]},
-        //     yaxis: {visible: false, range: [-1, 1]}
-        // };
-  
+        
         var data3 = [trace3];
-  
-        Plotly.plot('gauge', data3, layout3);
+
+        var layout3 = {
+            width: 550,
+            height: 350,
+            margin: { t: 0, b: 0},
+            paper_bgcolor: "white",
+            font: { color: "auto", family: "Arial" }
+        };
+    
+        Plotly.plot("gauge", data3, layout3);
     });
 };
 
 // Filter demographic info
 function demographData(sampleId) {
     d3.json("data/samples.json").then((otuData) => {
-        // var metadata = otuData.metadata;
         var demoArray = otuData.metadata.filter(m => m.id == sampleId);
         var result = demoArray[0];
-        // var panel = d3.select("#sample-metadata");
         d3.select("#sample-metadata").html("");
 
         Object.entries(result).forEach(([key, value]) => {
