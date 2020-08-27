@@ -59,7 +59,6 @@ function Gauge(sampleId) {
         var wash = otuData.metadata.filter(data => data.id == sampleId);
         var washArray = wash[0];
         var wfreq = washArray.wfreq;
-        // d3.select("#gauge").html("");
 
         //Trace for gauge
         var trace3 = {
@@ -102,7 +101,7 @@ function Gauge(sampleId) {
             font: {color: "auto", family: "Arial"}
         };
     
-        Plotly.plot("gauge", data3, layout3);
+        Plotly.newPlot("gauge", data3, layout3);
     });
 };
 
