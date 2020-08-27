@@ -42,7 +42,7 @@ function Graphs(sampleId) {
         var data2 = [trace2];
 
         var layout2 = {
-            title: "Present Microbes in Test Subject",
+            title: "Microbes in Test Subject",
             xaxis: {title: "OTU ID"},
             yaxis: {title: "Number of OTUs"},
             showlegend: false
@@ -57,10 +57,9 @@ function Graphs(sampleId) {
 function Gauge(sampleId) {
     d3.json("data/samples.json").then((otuData) => {
         var wash = otuData.metadata.filter(data => data.id == sampleId);
-        // var wfreqA = otuData.metadata.find(data => data.id.toString() === sampleID).wfreq;
         var washArray = wash[0];
         var wfreq = washArray.wfreq;
-        d3.select("#gauge").html("");
+        // d3.select("#gauge").html("");
 
         //Trace for gauge
         var trace3 = {
@@ -126,7 +125,7 @@ function demographData(sampleId) {
 function optionChanged(sampleId) {
     Graphs(sampleId);
     demographData(sampleId);
-    Gauge(sampleId)
+    Gauge(sampleId);    
 };
 
 // Initialize the page with default graphs and demographics info
