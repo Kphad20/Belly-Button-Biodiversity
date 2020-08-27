@@ -6,7 +6,6 @@ function Graphs(sampleID) {
         var otu_ids = sample.otu_ids;
         var otu_labels = sample.otu_labels;
         var sample_values = sample.sample_values;
-        // var wash = metadata.find(data ==> data.id.toString() === id).wfreq;
         
         // Trace for horizontal bar graph. Slice the top 10 OTUs and use reverse method to accommodate Plotly's ascending default
         var trace1 = {
@@ -51,35 +50,41 @@ function Graphs(sampleID) {
 
         // Render bubble plot
         Plotly.newPlot("bubble", data2, layout2);
+    });
+};
 
-        // BONUS //
+// BONUS //
+function Gauge(sampleID) {
+    d3.json("data/samples.json").then((otuData) => {
+        var wfreq = otuData.metadata.find(data => data.id.toString() === sampleID).wfreq
+        
         //Trace for gauge
         var trace3 = {
             type: "indicator",
             mode: "gauge+number",
-            value: otuData.metadata.wfreq,
-            title: { text: "Belly Button Washing Frequency", font: { size: 20 } },
+            value: wfreq,
+            title: {text: "Belly Button Washing Frequency", font: {size: 20}},
             gauge: {
-                axis: { range: [0, 9], tickwidth: 1, tickcolor: "black" },
-                bar: { color: "darkblue" },
-                bgcolor: "white",
+                axis: {range: [0, 9], tickwidth: 2, tickcolor: "black"},
+                bar: {color: "darkblue"},
+                bgcolor: "red",
                 borderwidth: 2,
                 bordercolor: "black",
                 steps: [
-                  { range: [0, 1], color: "#33BEFF" },
-                  { range: [1, 2], color: "#33ACFF" },
-                  { range: [2, 3], color: "#339FFF" },
-                  { range: [3, 4], color: "#3390FF" },
-                  { range: [4, 5], color: "#337AFF" },
-                  { range: [5, 6], color: "#3364FF " },
-                  { range: [6, 7], color: "#334CFF" },
-                  { range: [7, 8], color: "#3633FF" },
-                  { range: [8, 9], color: "#4C33FF" }
+                  {range: [0, 1], color: "#33BEFF"},
+                  {range: [1, 2], color: "#33ACFF"},
+                  {range: [2, 3], color: "#339FFF"},
+                  {range: [3, 4], color: "#3390FF"},
+                  {range: [4, 5], color: "#337AFF"},
+                  {range: [5, 6], color: "#3364FF"},
+                  {range: [6, 7], color: "#334CFF"},
+                  {range: [7, 8], color: "#3633FF"},
+                  {range: [8, 9], color: "#4C33FF"}
                 ],
                 threshold: {
-                  line: { color: "red", width: 4 },
+                  line: {color: "red", width: 4},
                   thickness: 0.75,
-                  value: otuData.metadata.wfreq
+                  value: wfreq
                 }
             }
         };
@@ -89,9 +94,9 @@ function Graphs(sampleID) {
         var layout3 = {
             width: 550,
             height: 350,
-            margin: { t: 0, b: 0},
+            margin: {t: 25, b: 25},
             paper_bgcolor: "white",
-            font: { color: "auto", family: "Arial" }
+            font: {color: "auto", family: "Arial"}
         };
     
         Plotly.plot("gauge", data3, layout3);
@@ -104,7 +109,7 @@ function demographData(sampleId) {
         var demoArray = otuData.metadata.filter(m => m.id == sampleId);
         var result = demoArray[0];
         d3.select("#sample-metadata").html("");
-
+        // Grab all key, values in metadata to display
         Object.entries(result).forEach(([key, value]) => {
             var display = `${key}: ${value}`;
             var panel = d3.select("#sample-metadata")
@@ -117,6 +122,7 @@ function demographData(sampleId) {
 function optionChanged(sampleID) {
     Graphs(sampleID);
     demographData(sampleID);
+    Gauge(sampleID)
 };
 
 // Initialize the page with default graphs and demographics info
@@ -131,7 +137,8 @@ function init() {
         });
         var sampleId = names[0];
         Graphs(sampleId);
-        demographData(sampleId)
+        demographData(sampleId);
+        Gauge(sampleID)
     });
 };
 
