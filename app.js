@@ -36,7 +36,8 @@ function Graphs(sampleId) {
             mode: "markers",
             marker: {
                 size: sample_values,
-                color: otu_ids
+                color: otu_ids,
+                colorscale: "Portland"
             },
             type: "scatter"
         };
@@ -70,20 +71,20 @@ function Gauge(sampleId) {
             title: {text: "Belly Button Washing Frequency", font: {size: 20}},
             gauge: {
                 axis: {range: [0, 9], tickwidth: 2, tickcolor: "black"},
-                bar: {color: "darkblue"},
+                bar: {color: "#FA8072"},
                 bgcolor: "red",
                 borderwidth: 2,
                 bordercolor: "black",
                 steps: [
-                  {range: [0, 1], color: "#33BEFF"},
-                  {range: [1, 2], color: "#33ACFF"},
-                  {range: [2, 3], color: "#339FFF"},
-                  {range: [3, 4], color: "#3390FF"},
-                  {range: [4, 5], color: "#337AFF"},
-                  {range: [5, 6], color: "#3364FF"},
-                  {range: [6, 7], color: "#334CFF"},
-                  {range: [7, 8], color: "#3633FF"},
-                  {range: [8, 9], color: "#4C33FF"}
+                  {range: [0, 1], color: "#A2D9CE"},
+                  {range: [1, 2], color: "#76D7C4"},
+                  {range: [2, 3], color: "#17A589"},
+                  {range: [3, 4], color: "#45B39D"},
+                  {range: [4, 5], color: "#138D75"},
+                  {range: [5, 6], color: "#0E6655"},
+                  {range: [6, 7], color: "#0B5345"},
+                  {range: [7, 8], color: "#154360"},
+                  {range: [8, 9], color: "#2471A3"}
                 ],
                 threshold: {
                   line: {color: "red", width: 4},
