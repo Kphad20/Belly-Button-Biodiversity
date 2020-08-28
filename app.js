@@ -1,3 +1,4 @@
+// Function to grab values from the response JSON object to build bar and bubble graphs.
 function Graphs(sampleId) {
     d3.json("data/samples.json").then((otuData) => {
         console.log(otuData);
@@ -7,7 +8,8 @@ function Graphs(sampleId) {
         var otu_labels = sample.otu_labels;
         var sample_values = sample.sample_values;
         
-        // Trace for horizontal bar graph. Slice the top 10 OTUs and use reverse method to accommodate Plotly's ascending default
+        // Trace for horizontal bar graph. 
+        // Slice the top 10 OTUs and use reverse method to accommodate Plotly's ascending default.
         var trace1 = {
             x: sample_values.slice(0, 10).reverse(),
             y: otu_ids.slice(0, 10).map(id => `OTU ${id}`).reverse(),
@@ -100,7 +102,8 @@ function Gauge(sampleId) {
             paper_bgcolor: "white",
             font: {color: "auto", family: "Arial"}
         };
-    
+        
+        // Render gauge chart
         Plotly.newPlot("gauge", data3, layout3);
     });
 };
