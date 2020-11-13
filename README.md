@@ -21,4 +21,4 @@ The dataset reveals that a small handful of microbial species (also called opera
 6. Update all of the plots any time that a new sample is selected.
 7. Adapt the Gauge Chart from https://plot.ly/javascript/gauge-charts/ to plot the weekly washing frequency of the individual. Ensure the chart is updated whenever a new sample is selected.
 
-The dashboard will be deployed to GitHub Pages [here] (https://kphad20.github.io/Belly-Button-Biodiversity/). 
+The dashboard will be deployed to GitHub Pages [here](https://kphad20.github.io/Belly-Button-Biodiversity/). 
